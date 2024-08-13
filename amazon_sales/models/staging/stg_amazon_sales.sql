@@ -13,16 +13,14 @@
 -- DROP all columns not being used by the bi questions (keep COURIER_STATUS for staging)
 
 
-{{ config(
-    materialized='table'  
-) }}
-
 WITH amount_cleaned AS (
     SELECT 
-        SKU,
+        ASIN,
         Category,
+        PROMOTION_IDS,
         Qty,
-        FIRST_VALUE(AMOUNT) OVER (PARTITION BY SKU ORDER BY CASE WHEN AMOUNT IS NOT NULL THEN 1 ELSE 0 END DESC) AS AMOUNT_CLEANED,
+        -- Convert AMOUNT from INR to USD before applying the FIRST_VALUE function
+        FIRST_VALUE(AMOUNT * 0.012) OVER (PARTITION BY ASIN ORDER BY CASE WHEN AMOUNT IS NOT NULL THEN 1 ELSE 0 END DESC) AS AMOUNT_CLEANED,
         STATUS,
         Fulfilment,
         Date,
@@ -34,15 +32,18 @@ WITH amount_cleaned AS (
 
 status_cleaned AS (
     SELECT
-        SKU,
+        ASIN,
+        PROMOTION_IDS,
         Category,
-        Qty,
+        CASE WHEN Qty = 0 THEN 1 ELSE Qty END AS Qty,
         AMOUNT_CLEANED,
         CASE
             WHEN COURIER_STATUS = 'Cancelled' THEN 'Cancelled'
-            WHEN STATUS = 'Shipped - Delivered to buyer' THEN 'Shipped'
+            WHEN STATUS = 'Shipped - Delivered to Buyer' THEN 'Shipped'
             WHEN STATUS IN ('Shipped - Returned to Seller', 'Shipped - Returning to Seller') THEN 'Returned'
             WHEN STATUS = 'Shipped - Out for Delivery' THEN 'Shipped'
+            WHEN STATUS = 'Pending - Waiting for Pick Up' THEN 'Shipped'
+            WHEN STATUS = 'Shipped - Picked Up' THEN 'Shipped'
             WHEN STATUS = 'Shipping' THEN 'Shipped'
             ELSE STATUS
         END AS STATUS_CLEANED,
@@ -57,15 +58,15 @@ status_cleaned AS (
 )
 
 SELECT 
-    SKU,
+    ASIN,
     Category,
+    PROMOTION_IDS,
     Qty,
     AMOUNT_CLEANED AS AMOUNT,
     STATUS_CLEANED AS STATUS,
     Fulfilment,
     Date,
-    SHIP_STATE,
-    COURIER_STATUS
+    SHIP_STATE
 FROM 
     status_cleaned
 WHERE 
