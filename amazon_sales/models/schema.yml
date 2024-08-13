@@ -86,4 +86,4 @@ sources:
           - name: _ROW
             description: "Row number in the source data."
             tests:
-              - not_null
+              - not_null1v
