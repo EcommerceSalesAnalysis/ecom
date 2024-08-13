@@ -15,4 +15,4 @@ SELECT
 FROM
     {{ ref('stg_amazon_sales') }}
 GROUP BY
-    SHIP_STATE, Category;
+    SHIP_STATE, Category

@@ -37,6 +37,7 @@ SELECT
     SUM(ps.total_returns) AS total_returns,  -- Total returns
     SUM(ps.total_cancellations) AS total_cancellations,  -- Total cancellations
     SUM(ps.total_returns) / NULLIF(SUM(ps.total_qty_sold), 0) * 100 AS return_rate,  -- Return rate as a percentage
+    SUM(ps.total_cancellations) / NULLIF(SUM(ps.total_qty_sold), 0) * 100 AS cancellation_rate,  -- Return rate as a percentage
     COALESCE(cr.revenue_loss_due_to_cancellations, 0) AS revenue_loss_due_to_cancellations, -- Revenue loss due to cancellations
     COALESCE(rr.revenue_loss_due_to_returns, 0) AS revenue_loss_due_to_returns  -- Revenue loss due to returns
 FROM
