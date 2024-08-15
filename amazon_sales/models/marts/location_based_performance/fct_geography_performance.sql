@@ -5,6 +5,7 @@
 SELECT
     SHIP_STATE,
     Category,
+    ASIN
     SUM(QTY) AS total_qty_sold,  -- Total quantity sold in each state and category
     SUM(CASE WHEN STATUS = 'Shipped' THEN AMOUNT ELSE 0 END) AS total_revenue,  -- Total revenue from shipped orders
     AVG(CASE WHEN STATUS = 'Shipped' THEN AMOUNT ELSE NULL END) AS avg_order_value,  -- Average order value from shipped orders
@@ -15,4 +16,4 @@ SELECT
 FROM
     {{ ref('stg_amazon_sales') }}
 GROUP BY
-    SHIP_STATE, Category
+    SHIP_STATE, Category, ASIN

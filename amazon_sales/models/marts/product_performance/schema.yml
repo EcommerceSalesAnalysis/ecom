@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: fct_product_performance
+    description: "Aggregates key metrics related to product performance, including total quantity sold, total revenue, and revenue loss due to cancellations and returns."
+    columns:
+      - name: ASIN
+        description: "Amazon Standard Identification Number for the product."
+        tests:
+          - not_null
+          - unique
+      - name: Category
+        description: "The product category."
+      - name: total_qty_sold
+        description: "Total quantity of products sold across all statuses."
+      - name: total_revenue
+        description: "Total revenue generated from shipped orders."
+      - name: avg_order_value
+        description: "Average order value from shipped orders."
+      - name: total_returns
+        description: "Total number of returns."
+      - name: total_cancellations
+        description: "Total number of cancellations."
+      - name: return_rate
+        description: "Return rate as a percentage of total quantity sold."
+      - name: cancellation_rate
+        description: "Cancellation rate as a percentage of total quantity sold."
+      - name: revenue_loss_due_to_cancellations
+        description: "Total revenue loss due to cancellations."
+      - name: revenue_loss_due_to_returns
+        description: "Total revenue loss due to returns."
+
+  - name: fct_promotion_impact
+    description: "Measures the impact of promotions on product sales by comparing sales performance with and without promotions."
+    columns:
+      - name: ASIN
+        description: "Amazon Standard Identification Number for the product."
+        tests:
+          - not_null
+          - unique
+      - name: Category
+        description: "The product category."
+      - name: promotion_type
+        description: "Indicates whether a promotion was applied ('Promotion Applied') or not ('No Promotion')."
+      - name: total_qty_sold
+        description: "Total quantity of products sold, with and without promotions."
+      - name: total_revenue
+        description: "Total revenue generated from shipped orders, with and without promotions."
+      - name: avg_order_value
+        description: "Average order value from shipped orders, with and without promotions."

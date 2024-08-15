@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fct_seasonal_trends
+    description: "Aggregates sales performance metrics by month and product category, including total quantity sold, total revenue, and return/cancellation rates."
+    columns:
+      - name: month
+        description: "The month in which the sales occurred, truncated to the month level."
+      - name: ASIN
+        description: "Amazon Standard Identification Number for the product."
+        tests:
+          - not_null
+          - unique
+      - name: Category
+        description: "The product category."
+      - name: total_qty_sold
+        description: "Total quantity of products sold in each month."
+      - name: total_revenue
+        description: "Total revenue generated from shipped orders in each month."
+      - name: total_returns
+        description: "Total number of returns in each month."
+      - name: total_cancellations
+        description: "Total number of cancellations in each month."
+      - name: return_rate
+        description: "Return rate as a percentage of total quantity sold in each month."
+      - name: cancellation_rate
+        description: "Cancellation rate as a percentage of total quantity sold in each month."

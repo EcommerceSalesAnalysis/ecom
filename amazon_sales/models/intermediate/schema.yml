@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: int_product_sales
+    description: "Aggregates product sales data by ASIN, Category, and Ship State, including revenue, potential revenue, and return/cancellation counts."
+    columns:
+      - name: ASIN
+        description: "Amazon Standard Identification Number (ASIN) for the product."
+        tests:
+          - not_null
+          - unique
+      - name: Category
+        description: "Category of the product."
+        tests:
+          - not_null
+      - name: ship_state
+        description: "The state to which the product was shipped."
+      - name: total_qty_sold
+        description: "Total quantity of the product sold."
+      - name: total_revenue
+        description: "Total revenue from shipped orders."
+      - name: potential_revenue
+        description: "Potential revenue from pending orders."
+      - name: avg_order_value
+        description: "Average order value."
+      - name: total_returns
+        description: "Total number of returns."
+      - name: total_cancellations
+        description: "Total number of cancellations."
+
+  - name: int_seasonal_trends
+    description: "Aggregates sales data by month to identify seasonal trends, including total quantity sold, revenue, returns, and cancellations."
+    columns:
+      - name: month
+        description: "Month in which the sales data is aggregated."
+        tests:
+          - not_null
+      - name: Category
+        description: "Category of the product."
+        tests:
+          - not_null
+      - name: ASIN
+        description: "Amazon Standard Identification Number (ASIN) for the product."
+        tests:
+          - not_null
+          - unique
+      - name: total_qty_sold
+        description: "Total quantity of the product sold during the month."
+      - name: total_revenue
+        description: "Total revenue from shipped orders during the month."
+      - name: total_returns
+        description: "Total number of returns during the month."
+      - name: total_cancellations
+        description: "Total number of cancellations during the month."

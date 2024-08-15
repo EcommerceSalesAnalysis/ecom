@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: fct_geography_performance
+    description: "Aggregates sales performance by state and category, including metrics like total quantity sold, total revenue, and return/cancellation rates."
+    columns:
+      - name: ASIN
+        description: "Amazon Standard Identification Number for the product."
+        tests:
+          - not_null
+          - unique
+      - name: SHIP_STATE
+        description: "The state to which the products were shipped."
+      - name: Category
+        description: "The product category."
+      - name: total_qty_sold
+        description: "Total quantity of products sold in each state and category."
+      - name: total_revenue
+        description: "Total revenue generated from shipped orders in each state and category."
+      - name: avg_order_value
+        description: "Average order value from shipped orders in each state and category."
+      - name: total_returns
+        description: "Total number of returns in each state and category."
+      - name: total_cancellations
+        description: "Total number of cancellations in each state and category."
+      - name: return_rate
+        description: "Return rate as a percentage of shipped orders in each state and category."
+      - name: cancellation_rate
+        description: "Cancellation rate as a percentage of shipped orders in each state and category."
+
+  
