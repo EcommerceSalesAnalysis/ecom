@@ -1,33 +1,35 @@
 version: 2
-
 models:
-  - name: int_product_sales
-    description: "Aggregates product sales data by ASIN, Category, and Ship State, including revenue, potential revenue, and return/cancellation counts."
+  - name: int_sales_summary
+    description: "Aggregated sales data, including total quantity sold, revenue, returns, and cancellations, summarized by ASIN, Category, Promotion ID, and Ship State."
     columns:
       - name: ASIN
-        description: "Amazon Standard Identification Number (ASIN) for the product."
+        description: "Amazon Standard Identification Number for the product."
         tests:
           - not_null
           - unique
       - name: Category
-        description: "Category of the product."
-        tests:
-          - not_null
-      - name: ship_state
-        description: "The state to which the product was shipped."
+        description: "The product category."
+      - name: PROMOTION_IDS
+        description: "Promotion IDs applied to the order."
+      - name: SHIP_STATE
+        description: "State where the order is shipped."
       - name: total_qty_sold
-        description: "Total quantity of the product sold."
-      - name: total_revenue
-        description: "Total revenue from shipped orders."
+        description: "Total quantity of products sold across all statuses."
+      - name: shipped_revenue
+        description: "Total revenue generated from shipped orders."
       - name: potential_revenue
         description: "Potential revenue from pending orders."
       - name: avg_order_value
-        description: "Average order value."
+        description: "Average order value from all orders."
       - name: total_returns
         description: "Total number of returns."
       - name: total_cancellations
         description: "Total number of cancellations."
-
+      - name: return_rate
+        description: "Return rate as a percentage of total quantity sold."
+      - name: cancellation_rate
+        description: "Cancellation rate as a percentage of total quantity sold."
   - name: int_seasonal_trends
     description: "Aggregates sales data by month to identify seasonal trends, including total quantity sold, revenue, returns, and cancellations."
     columns:
