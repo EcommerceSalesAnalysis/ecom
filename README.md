@@ -1,4 +1,4 @@
-# Amazon Sales Data Anylysis
+# Amazon Sales Data Analysis
 ## Project Overview
 This project aims to analyze sales data from Amazon using a robust ETL pipeline built with dbt (Data Build Tool) and Snowflake as the data warehouse. The analysis focuses on various aspects of sales performance, including product performance, promotions, seasonal trends, and geographical insights. The project is designed to provide actionable insights to help improve business strategies.
 
